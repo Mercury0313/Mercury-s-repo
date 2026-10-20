@@ -131,21 +131,18 @@ $env:DEEPSEEK_FLASH_BASE_URL = 'https://<your-deepseek-compatible-endpoint>/v1'
 
 服务端会自动丢弃目标后端不支持的可选 OpenAI 参数。例如 Ollama 的 `qwen3:1.7b` 不支持 `presence_penalty`，但客户端即使按 OpenAI 默认值发送该字段，也不会使请求失败。
 
-## 5. 同步到 Mercury-s-repo 的 `routeLLM/` 子目录
+## 5. 直接使用 Git 同步到 Mercury-s-repo
 
-发布仓库的 `main` 分支将 RouteLLM 放在 `routeLLM/` 子目录。日常修改请在本仓库完成并提交，然后运行：
-
-```powershell
-.\scripts\sync_to_mercury_repo.ps1 -Message "Describe this RouteLLM update"
-```
-
-脚本默认使用 `D:\router\routeLLM-publish-snapshot` 作为发布仓库，只镜像当前 `HEAD` 的已提交文件到其 `routeLLM/`。它会拒绝源仓库或发布仓库存在未提交改动的情况；`/MIR` 的删除范围也严格限于发布仓库的 `routeLLM/`，不会触及其他项目。若发布仓库迁移到其他路径，可明确传入：
+本地开发目录为 `D:\router\Mercury-s-repo\routeLLM`，其 Git 根目录是上一级 `D:\router\Mercury-s-repo`。完成修改与验证后，直接在 `routeLLM/` 内执行：
 
 ```powershell
-.\scripts\sync_to_mercury_repo.ps1 `
-  -PublishRepository 'D:\path\to\Mercury-s-repo' `
-  -Message "Describe this RouteLLM update"
+git status
+git add .
+git commit -m "Describe this RouteLLM update"
+git push origin main
 ```
+
+从 `routeLLM/` 执行 Git 命令只会暂存该项目目录内的改动；推送会把它直接同步到 `Mercury-s-repo` 的 `main/routeLLM/`。不再需要快照仓库或同步脚本。
 
 ## 6. 阈值校准与评估
 
