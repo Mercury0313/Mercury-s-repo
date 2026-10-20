@@ -131,7 +131,23 @@ $env:DEEPSEEK_FLASH_BASE_URL = 'https://<your-deepseek-compatible-endpoint>/v1'
 
 服务端会自动丢弃目标后端不支持的可选 OpenAI 参数。例如 Ollama 的 `qwen3:1.7b` 不支持 `presence_penalty`，但客户端即使按 OpenAI 默认值发送该字段，也不会使请求失败。
 
-## 5. 阈值校准与评估
+## 5. 同步到 Mercury-s-repo 的 `routeLLM/` 子目录
+
+发布仓库的 `main` 分支将 RouteLLM 放在 `routeLLM/` 子目录。日常修改请在本仓库完成并提交，然后运行：
+
+```powershell
+.\scripts\sync_to_mercury_repo.ps1 -Message "Describe this RouteLLM update"
+```
+
+脚本默认使用 `D:\router\routeLLM-publish-snapshot` 作为发布仓库，只镜像当前 `HEAD` 的已提交文件到其 `routeLLM/`。它会拒绝源仓库或发布仓库存在未提交改动的情况；`/MIR` 的删除范围也严格限于发布仓库的 `routeLLM/`，不会触及其他项目。若发布仓库迁移到其他路径，可明确传入：
+
+```powershell
+.\scripts\sync_to_mercury_repo.ps1 `
+  -PublishRepository 'D:\path\to\Mercury-s-repo' `
+  -Message "Describe this RouteLLM update"
+```
+
+## 6. 阈值校准与评估
 
 在已同意下载外部资源后，校准 50% 强模型调用比例：
 
