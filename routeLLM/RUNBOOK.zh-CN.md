@@ -177,10 +177,10 @@ git push origin main
 
 启动服务
 
-$env:EMBEDDING_BASE_URL = 'https://api.zhizengzeng.com/vi'
+$env:EMBEDDING_BASE_URL = 'https://api.zhizengzeng.com/v1'
 $env:EMBEDDING_API_KEY = ''
 $env:DEEPSEEK_FLASH_API_KEY = ''
-$env:DEEPSEEK_FLASH_BASE_URL = 'https://api.zhizengzeng.com/vi'
+$env:DEEPSEEK_FLASH_BASE_URL = 'https://api.zhizengzeng.com/v1'
 
 & 'D:\Anaconda\envs\pytorch\python.exe' -m routellm.openai_server `
   --routers mf `
