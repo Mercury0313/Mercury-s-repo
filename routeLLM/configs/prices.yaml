@@ -1,0 +1,31 @@
+schema_version: "0.1"
+currency: USD
+price_snapshot_date: "2026-10-30"
+
+candidates:
+  qwen3_1p7b_local:
+    input_per_million_tokens: 0.0
+    output_per_million_tokens: 0.0
+    api_cost_only: true
+    local_hardware_cost_included: false
+
+  deepseek_flash_api:
+    source_url: https://api-docs.deepseek.com/quick_start/pricing/
+    billing_mode: request_timestamp
+    off_peak:
+      input_cache_hit_per_million_tokens: 0.003
+      input_cache_miss_per_million_tokens: 0.15
+      output_per_million_tokens: 0.6
+    peak:
+      input_cache_hit_per_million_tokens: 0.006
+      input_cache_miss_per_million_tokens: 0.3
+      output_per_million_tokens: 1.2
+    peak_window_utc: "Monday-Friday 01:00-04:00 and 06:00-10:00; excluding Chinese public holidays"
+
+calculation:
+  formula: >-
+    cost_usd = cache_hit_tokens / 1000000 * input_cache_hit_per_million_tokens
+      + cache_miss_tokens / 1000000 * input_cache_miss_per_million_tokens
+      + completion_tokens / 1000000 * output_per_million_tokens
+  record_price_snapshot_date: true
+  record_price_band: true

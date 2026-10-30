@@ -1,0 +1,44 @@
+schema_version: "0.1"
+experiment_id: qwen3_1p7b_vs_deepseek_flash_v1
+
+candidates:
+  small:
+    candidate_id: qwen3_1p7b_local
+    role: weak
+    provider: ollama
+    base_url: http://localhost:11434/v1
+    model: qwen3:1.7b
+    request:
+      temperature: 0.0
+      top_p: 1.0
+      max_tokens: 512
+      stream: false
+      reasoning_effort: none
+    thinking:
+      enabled: false
+    provenance:
+      record_model_revision: true
+      record_runtime: true
+      record_hardware: true
+
+  large:
+    candidate_id: deepseek_flash_api
+    role: strong
+    provider: deepseek
+    base_url: https://api.zhizengzeng.com/v1
+    api_key_env: DEEPSEEK_API_KEY
+    model: deepseek-flash
+    request:
+      temperature: 0.0
+      top_p: 1.0
+      max_tokens: 512
+      stream: false
+      extra_body:
+        thinking:
+          type: disabled
+    thinking:
+      enabled: false
+    provenance:
+      expected_alias_target: DeepSeek-V4.1-Flash-1017
+      record_model_returned_by_api: true
+      record_request_timestamp_utc: true

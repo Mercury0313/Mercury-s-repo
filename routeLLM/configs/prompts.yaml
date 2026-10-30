@@ -1,0 +1,31 @@
+schema_version: "0.1"
+prompt_version: routing_v1
+
+# The collector must send the same logical messages to both candidates.
+# Provider-specific chat serialization is permitted but must be recorded.
+tasks:
+  gsm8k:
+    system: You are a helpful assistant. Solve the problem accurately.
+    user_template: |
+      Solve the following math problem. Give the final answer clearly.
+
+      {question}
+    expected_output: final_answer
+
+  ifeval:
+    system: Follow every instruction in the user request exactly.
+    user_template: "{prompt}"
+    expected_output: instruction_compliant_response
+
+  ceval:
+    system: 请严格按要求完成任务。
+    user_template: |
+      以下是中国关于{subject_zh}考试的单项选择题，请选出其中的正确答案。
+
+      {question}
+      A. {A}
+      B. {B}
+      C. {C}
+      D. {D}
+      答案：
+    expected_output: choice_letter

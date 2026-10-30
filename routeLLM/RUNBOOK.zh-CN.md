@@ -228,3 +228,8 @@ $response = Invoke-RestMethod `
 
 $response.model
 $response.choices[0].message.content
+
+
+
+
+ollama run qwen3:1.7b
