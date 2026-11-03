@@ -178,8 +178,8 @@ git push origin main
 启动服务
 
 $env:EMBEDDING_BASE_URL = 'https://api.zhizengzeng.com/v1'
-$env:EMBEDDING_API_KEY = ''
-$env:DEEPSEEK_FLASH_API_KEY = ''
+$env:EMBEDDING_API_KEY = 'sk-zk2a06057cd1ee942a0988edd6975dbf48e6ad5a78170416'
+$env:DEEPSEEK_FLASH_API_KEY = 'sk-zk22c309811723ec891ddefdecb905727dd6ad74c6ac4be0'
 $env:DEEPSEEK_FLASH_BASE_URL = 'https://api.zhizengzeng.com/v1'
 
 & 'D:\Anaconda\envs\pytorch\python.exe' -m routellm.openai_server `
@@ -231,5 +231,32 @@ $response.choices[0].message.content
 
 
 
-
+启动小模型
 ollama run qwen3:1.7b
+
+
+产生模型回答
+$env:DEEPSEEK_API_KEY = 'sk-zk22c309811723ec891ddefdecb905727dd6ad74c6ac4be0'
+
+& 'D:\Anaconda\envs\pytorch\python.exe' .\data\collect_executions.py `
+  --limit 300 `
+  --seed 20261030 `
+  --run-id test2026_11_3 `
+  --output .\data\executions_2026_11_3.jsonl
+
+产生回答评分
+评分前？？？
+$env:NLTK_DATA = "D:\Mercury_project\Mercury-s-repo\routeLLM\data\nltk_data"
+
+python data\score_executions.py `
+  --executions 给定excution文件路径.jsonl `
+  --scored-name 给定名称.jsonl `
+  --routing-name 给定名称.jsonl
+
+
+分析数据集
+python data\analyze_routing.py `
+  --input data\derived\routing_samples_v2.jsonl `
+  --output data\derived\routing_analysis_v2.json
+  #-- 、--small-candidate qwen3_1p7b_local `
+  #--large-candidate gpt_3_5_api -->
