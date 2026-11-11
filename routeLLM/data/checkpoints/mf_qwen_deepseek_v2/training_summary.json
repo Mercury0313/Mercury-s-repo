@@ -1,0 +1,25 @@
+{
+  "device": "cuda",
+  "embedding_shape": [
+    298,
+    1536
+  ],
+  "num_models": 66,
+  "train_samples": 239,
+  "validation_samples": 59,
+  "quality_target_counts": {
+    "0.5": 226,
+    "0.0": 65,
+    "1.0": 7
+  },
+  "routing_preference_counts": {
+    "model_a": 233,
+    "model_b": 65
+  },
+  "validation": {
+    "loss": 0.6730250988976431,
+    "decisive_accuracy": 0.9285714285714286,
+    "tie_probability_deviation": 0.0977709346347385
+  },
+  "seed": 42
+}

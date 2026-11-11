@@ -68,6 +68,8 @@ MODEL_IDS = {
     "yi-34b-chat": 61,
     "zephyr-7b-alpha": 62,
     "zephyr-7b-beta": 63,
+    "qwen3_1p7b_local": 64,
+    "deepseek_flash_api": 65,
 }
 
 

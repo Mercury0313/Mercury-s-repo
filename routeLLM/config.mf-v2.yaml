@@ -1,0 +1,8 @@
+mf:
+  checkpoint_path: data/checkpoints/mf_qwen_deepseek_v2
+  strong_model: deepseek_flash_api
+  weak_model: qwen3_1p7b_local
+  hidden_size: 128
+  num_models: 66
+  text_dim: 1536
+  embedding_model: text-embedding-3-small

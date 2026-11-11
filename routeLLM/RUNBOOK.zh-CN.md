@@ -216,7 +216,7 @@ Invoke-RestMethod `
   -ContentType 'application/json' `
   -Body $body
 
-
+#router-mf-0.5中0.5为阈值，表明对成本的要求程度，阈值越高对成本越敏感。当大模型胜率大于该阈值时则路由到大模型，故阈值越高越容易路由到小模型
 
 
 查看回答
@@ -260,3 +260,37 @@ python data\analyze_routing.py `
   --output data\derived\routing_analysis_v2.json
   #-- 、--small-candidate qwen3_1p7b_local `
   #--large-candidate gpt_3_5_api -->
+
+
+
+训练路由
+cd D:\Mercury_project\Mercury-s-repo\routeLLM
+
+& 'D:\Anaconda\envs\pytorch\python.exe' -m routellm.routers.matrix_factorization.train_local_mf_router `
+  --pairwise-jsonl data\derived\pairwise_data.jsonl `
+  --embeddings-npy data\derived\prompt_embeddings.npy `
+  --output-dir data\checkpoints\mf_qwen_deepseek_v2 `
+  --epochs 100 `
+  --validation-fraction 0.2 `
+  --seed 42
+
+
+启动本地路由
+$env:EMBEDDING_BASE_URL = 'https://api.zhizengzeng.com/v1'
+$env:EMBEDDING_API_KEY = ''
+$env:DEEPSEEK_FLASH_API_KEY = ''
+$env:DEEPSEEK_FLASH_BASE_URL = 'https://api.zhizengzeng.com/v1'
+& 'D:\Anaconda\envs\pytorch\python.exe' -m routellm.openai_server `
+  --routers mf `
+  --config config.mf-v2.yaml `
+  --strong-model deepseek_flash_api `
+  --weak-model qwen3_1p7b_local `
+  --strong-model-backend deepseek/deepseek-flash `
+  --strong-base-url $env:DEEPSEEK_FLASH_BASE_URL `
+  --strong-api-key $env:DEEPSEEK_FLASH_API_KEY `
+  --weak-model-backend ollama/qwen3:1.7b `
+  --weak-base-url http://127.0.0.1:11434 `
+  --weak-api-key ollama `
+  --embedding-base-url $env:EMBEDDING_BASE_URL `
+  --embedding-api-key $env:EMBEDDING_API_KEY `
+  --embedding-model text-embedding-3-small
