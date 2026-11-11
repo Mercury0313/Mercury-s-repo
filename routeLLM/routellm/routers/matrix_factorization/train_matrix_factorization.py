@@ -16,6 +16,22 @@ np.random.seed(42)
 random.seed(42)
 
 
+def load_pairwise_jsonl(jsonl_path):
+    data = []
+    with open(jsonl_path, "r", encoding="utf-8") as file:
+        for line_number, line in enumerate(file, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                data.append(json.loads(line))
+            except json.JSONDecodeError as exc:
+                raise ValueError(
+                    f"Invalid JSON on line {line_number}: {jsonl_path}"
+                ) from exc
+    return data
+
+
 class PairwiseDataset(Dataset):
     def __init__(self, data):
         self.models_a = torch.tensor(
@@ -201,7 +217,7 @@ def train_loops(
 
 if __name__ == "__main__":
     # an example of training the model
-    json_path = "/path/to/pairwise_data.json"
+    jsonl_path = "/path/to/pairwise_data.jsonl"
     npy_path = "/path/to/prompt/embedding.npy"
 
     dim = 128
@@ -213,7 +229,7 @@ if __name__ == "__main__":
     weight_decay = 1e-5
 
     # load and filter data
-    data = json.load(open(json_path, "r"))
+    data = load_pairwise_jsonl(jsonl_path)
 
     filtered_data = [
         sample
@@ -232,6 +248,10 @@ if __name__ == "__main__":
         batch_size=batch_size, shuffle=True
     )
     test_data_loader = PairwiseDataset(test_data).get_dataloaders(1024, shuffle=False)
+
+    embedding_count = np.load(npy_path, mmap_mode="r").shape[0]
+    if max(sample["idx"] for sample in data) >= embedding_count:
+        raise ValueError("idx exceeds prompt embedding row count")
 
     model = MFModel_Train(
         dim=dim,

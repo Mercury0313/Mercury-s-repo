@@ -178,8 +178,8 @@ git push origin main
 启动服务
 
 $env:EMBEDDING_BASE_URL = 'https://api.zhizengzeng.com/v1'
-$env:EMBEDDING_API_KEY = 'sk-zk2a06057cd1ee942a0988edd6975dbf48e6ad5a78170416'
-$env:DEEPSEEK_FLASH_API_KEY = 'sk-zk22c309811723ec891ddefdecb905727dd6ad74c6ac4be0'
+$env:EMBEDDING_API_KEY = ''
+$env:DEEPSEEK_FLASH_API_KEY = ''
 $env:DEEPSEEK_FLASH_BASE_URL = 'https://api.zhizengzeng.com/v1'
 
 & 'D:\Anaconda\envs\pytorch\python.exe' -m routellm.openai_server `
@@ -236,7 +236,7 @@ ollama run qwen3:1.7b
 
 
 产生模型回答
-$env:DEEPSEEK_API_KEY = 'sk-zk22c309811723ec891ddefdecb905727dd6ad74c6ac4be0'
+$env:DEEPSEEK_API_KEY = ''
 
 & 'D:\Anaconda\envs\pytorch\python.exe' .\data\collect_executions.py `
   --limit 300 `
