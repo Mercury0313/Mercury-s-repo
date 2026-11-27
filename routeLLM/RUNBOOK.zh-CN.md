@@ -294,3 +294,14 @@ $env:DEEPSEEK_FLASH_BASE_URL = 'https://api.zhizengzeng.com/v1'
   --embedding-base-url $env:EMBEDDING_BASE_URL `
   --embedding-api-key $env:EMBEDDING_API_KEY `
   --embedding-model text-embedding-3-small
+
+
+
+  数据流程：
+  build_requests.py  生成query  产生requests.jsonl    原始query
+  collect_executions 大小模型分别执行query   产生executions.jsonl   原始响应
+  score_executions   对大小模型的执行情况打分  产生score.jsonl（原始评分） 与 routing.jsonl（成对记录）
+  build_pairwise_data 生成可用于训练的标签集  产生pairwise_data.jsonl
+  generate_prompt_embeddings 生成对应于pairwise_data.jsonl的prompt嵌入（embedding）记录  产生proprompt_embeddings
+  train_local_mf_router 训练本地rm路由  产生路由模型于D:\Mercury_project\Mercury-s-repo\routeLLM\data\checkpoints
+  config.mf-v2       本地rm路由配置  用于启动本地路由

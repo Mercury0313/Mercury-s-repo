@@ -1,7 +1,0 @@
-{
-  "dim": 128,
-  "num_classes": 1,
-  "num_models": 66,
-  "text_dim": 1536,
-  "use_proj": true
-}
