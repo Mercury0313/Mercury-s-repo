@@ -1,0 +1,31 @@
+# Populate these files using examples/racerrouter/prepare_demo.py, or supply
+# your own standard LLMRouter records and matching embedding metadata.
+data_path:
+  routing_data_train: examples/racerrouter/data/train.jsonl
+  query_embedding_data: examples/racerrouter/data/embeddings.pt
+
+model_path:
+  save_model_path: saved_models/racerrouter/policy.pt
+
+racer:
+  candidate_models: [model_a, model_b]
+  token_column: output_tokens
+  cost_mode: relative_output_tokens
+  validation_fraction: 0.2
+  inference_seed: 42
+
+embedding:
+  backend: precomputed
+  metadata_path: examples/racerrouter/data/embedding.json
+
+hparam:
+  budget: 2.0
+  use_robust: true  # false trains ACER; requires a new checkpoint
+  tau_r: 1.0
+  tau_g: 50.0
+  entropy_coef: 0.005
+  epochs: 20
+  batch_size: 128
+  lr: 0.001
+  dual_lr: 0.01
+  seed: 42

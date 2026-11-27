@@ -1,0 +1,8 @@
+model_path:
+  load_model_path: saved_models/racerrouter/policy.pt
+racer:
+  inference_seed: 42
+# Model IDs, embedding metadata and training budget are restored from checkpoint.
+# Add data_path.llm_data with your candidate endpoints for live LLM calls.
+# Text --query inference requires a checkpoint trained on the library's
+# Longformer embeddings. The default synthetic demo uses precomputed features.

@@ -1,0 +1,109 @@
+{
+  "source_commit": "9d80eccb5cae14684e372bce35929c6c8a13cead",
+  "torch_version": "2.0.1",
+  "dtype": "float32",
+  "hparam": {
+    "budget": 1.6,
+    "entropy_coef": 0.005,
+    "epochs": 4,
+    "lr": 0.002,
+    "dual_lr": 0.1,
+    "tau_r": 0.3,
+    "tau_g": 0.5
+  },
+  "initialization": "((arange + parameter_index) % 17 - 8) / 50",
+  "acer": {
+    "best_epoch": 4,
+    "final_lambda": 1.153432846069336,
+    "feasible": false,
+    "history": [
+      {
+        "epoch": 1,
+        "train_reward": 0.9118626117706299,
+        "train_cost": 4.388054410616557,
+        "train_entropy": 0.2670669307311376,
+        "val_reward": 0.9787103652954101,
+        "val_cost": 4.077720642089844,
+        "val_entropy": 0.1882110834121704,
+        "lambda": 0.2788054347038269
+      },
+      {
+        "epoch": 2,
+        "train_reward": 0.9827315409978231,
+        "train_cost": 4.568873564402263,
+        "train_entropy": 0.15430429702003798,
+        "val_reward": 0.9926931381225585,
+        "val_cost": 4.092803955078125,
+        "val_entropy": 0.16741569340229034,
+        "lambda": 0.5755533576011658
+      },
+      {
+        "epoch": 3,
+        "train_reward": 0.9931614995002747,
+        "train_cost": 4.560316960016887,
+        "train_entropy": 0.15236948740979037,
+        "val_reward": 0.9925808906555176,
+        "val_cost": 3.980216217041016,
+        "val_entropy": 0.2584582269191742,
+        "lambda": 0.8712972402572632
+      },
+      {
+        "epoch": 4,
+        "train_reward": 0.9915426969528198,
+        "train_cost": 4.425712585449219,
+        "train_entropy": 0.24052147070566812,
+        "val_reward": 0.9858942985534668,
+        "val_cost": 3.702712631225586,
+        "val_entropy": 0.3393351137638092,
+        "lambda": 1.153432846069336
+      }
+    ]
+  },
+  "racer": {
+    "best_epoch": 4,
+    "final_lambda": 1.16387140750885,
+    "feasible": false,
+    "history": [
+      {
+        "epoch": 1,
+        "train_reward": 0.9117799003918966,
+        "train_cost": 4.387558023134868,
+        "train_entropy": 0.26738566408554715,
+        "val_reward": 0.9779924392700196,
+        "val_cost": 4.073690795898438,
+        "val_entropy": 0.1926393210887909,
+        "lambda": 0.2787558138370514
+      },
+      {
+        "epoch": 2,
+        "train_reward": 0.9821764826774597,
+        "train_cost": 4.56611982981364,
+        "train_entropy": 0.15759532898664474,
+        "val_reward": 0.9924201011657715,
+        "val_cost": 4.104366683959961,
+        "val_entropy": 0.15502801537513733,
+        "lambda": 0.5752284526824951
+      },
+      {
+        "epoch": 3,
+        "train_reward": 0.9932988882064819,
+        "train_cost": 4.57781982421875,
+        "train_entropy": 0.13677118284006914,
+        "val_reward": 0.9943393707275391,
+        "val_cost": 4.0544994354248045,
+        "val_entropy": 0.20224113762378693,
+        "lambda": 0.8727228045463562
+      },
+      {
+        "epoch": 4,
+        "train_reward": 0.9942270914713541,
+        "train_cost": 4.5158491134643555,
+        "train_entropy": 0.18626230334242186,
+        "val_reward": 0.9920610427856446,
+        "val_cost": 3.888163375854492,
+        "val_entropy": 0.3013456463813782,
+        "lambda": 1.16387140750885
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+# Config parameters for TSRouter (4-partite HGT-based routing).
+#
+# TSRouter routes to (modality, model) pairs using a heterogeneous graph
+# neural network over Task / Query / Modality / Model node types.
+#
+# NOTE: data_path fields below follow the LLMRouter convention but are not
+# directly consumed by TSRouter — TSRouter uses its own data files specified
+# in the `tsrouter` section.  Keep data_path populated so MetaRouter's
+# DataLoader does not error out.
+
+data_path:
+  query_data_train: 'data/example_data/query_data/default_query_train.jsonl'
+  query_data_test: 'data/example_data/query_data/default_query_test.jsonl'
+  query_embedding_data: 'data/example_data/routing_data/query_embeddings_longformer.pt'
+  routing_data_train: 'data/example_data/routing_data/default_routing_train_data.jsonl'
+  routing_data_test: 'data/example_data/routing_data/default_routing_test_data.jsonl'
+  llm_data: 'data/example_data/llm_candidates/default_llm.json'
+  llm_embedding_data: 'data/example_data/llm_candidates/default_llm_embeddings.json'
+
+# Paths used by TSRouter internally (relative to TSRouter/ directory).
+tsrouter:
+  router_data_path: data/router_data.csv
+  model_desc_path: configs/model_descriptions.json
+  candidate_embedding_path: configs/candidate_embeddings.pkl
+  model_path: model_path/tsrouter_llmrouter.pth
+
+metric:
+  weights:
+    performance: 1
+    cost: 0
+    llm_judge: 0
+
+hparam:
+  # GNN architecture
+  embedding_dim: 128          # Hidden dimension after FeatureAlign (4096 → D)
+  num_layers: 1               # Number of HGTConv layers
+  heads: 4                    # Multi-head attention heads
+  use_reverse_edges: true     # Add reverse edges (query→task, mod→query, etc.)
+
+  # Soft-label training
+  loss_type: kl               # 'kl' (recommended) or 'bce'
+  label_temperature: 0.5      # Temperature τ for softmax over effect scores
+  alpha: 1.0                  # Effect weight in combined label
+  beta: 0.0                   # Cost weight in combined label
+
+  # KNN query-similarity edges
+  knn_k: 30                   # Number of KNN neighbours per query node
+  knn_source: ts_stat         # Feature source for KNN: 'ts_stat' or 'embedding'
+
+  # Prediction head
+  pred_mode: mlp              # 'mlp' (default) or 'dot'
+
+  # Optimiser
+  learning_rate: 0.001
+  weight_decay: 0
+  train_epoch: 500
